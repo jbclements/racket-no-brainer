@@ -8,6 +8,5 @@
   (define tool-names (list "Simple Static Checker"))
   (define compile-omit-paths '("private/test.rkt"))
   (define scribblings '(("no-brainer.scrbl" ())))
-  (define primary-file '("main.rkt"))
   (define version "20130227")
   )
