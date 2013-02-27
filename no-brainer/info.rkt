@@ -4,7 +4,6 @@
   (define release-notes
     `("This version uses planet2."))
   (define categories `(devtools))
-  #;(define doc.txt "doc.txt")
   (define tools '(("no-brainer-tool.rkt")))
   (define tool-names (list "Simple Static Checker"))
   (define compile-omit-paths '("private/test.rkt"))
