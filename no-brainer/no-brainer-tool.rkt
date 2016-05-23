@@ -1,19 +1,17 @@
-#lang scheme
+#lang racket/base
   
-(require scheme/contract
-         drscheme/tool
-         mred/mred
-         framework/framework
-         (prefix-in frame: framework/framework)
+(require racket/contract
+         drracket/tool
+         racket/gui/base
+         (prefix-in frame: framework)
          mrlib/switchable-button
-         mrlib/bitmap-label
-         scheme/class
-         scheme/list
-         scheme/unit
-         scheme/runtime-path
-         "no-brainer-sig.ss"
-         "private/no-brainer-vc.ss"
-         "private/no-brainer.ss"
+         racket/class
+         racket/list
+         racket/unit
+         racket/runtime-path
+         "no-brainer-sig.rkt"
+         "private/no-brainer-vc.rkt"
+         "private/no-brainer.rkt"
          (lib "my-macros.ss" "stepper" "private"))
   
 (define-runtime-path icon-path "icon.png")
@@ -21,8 +19,8 @@
   (provide tool@)
   
   (define-unit tool@ 
-    (import drscheme:tool^)
-    (export drscheme:tool-exports^)
+    (import drracket:tool^)
+    (export drracket:tool-exports^)
     
     (define (phase1) (void))
     (define (phase2) (void))
@@ -45,9 +43,9 @@
            (lambda (iter)
              (let* ([lang-settings 
                      (frame:preferences:get
-                      (drscheme:language-configuration:get-settings-preferences-symbol))])
-               (drscheme:eval:expand-program
-                (drscheme:language:make-text/pos (get-definitions-text) 
+                      (drracket:language-configuration:get-settings-preferences-symbol))])
+               (drracket:eval:expand-program
+                (drracket:language:make-text/pos (get-definitions-text)
                                                  0
                                                  (send (get-definitions-text)
                                                        last-position)) 
@@ -100,4 +98,4 @@
         (send (get-button-panel) change-children
               (lx (cons no-brainer-button (remq no-brainer-button _))))))
     
-    (drscheme:get/extend:extend-unit-frame debugger-unit-frame-mixin))
+    (drracket:get/extend:extend-unit-frame debugger-unit-frame-mixin))

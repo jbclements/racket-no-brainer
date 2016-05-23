@@ -1,9 +1,8 @@
-(module build-arity-table scheme
+(module build-arity-table racket/base
   
   (require syntax/kerncase
-           (lib "contract.ss")
-           (lib "list.ss")
-           "arity-table.ss")
+           racket/contract
+           "arity-table.rkt")
   
   (provide/contract [build-arity-table (-> syntax? table?)])
   
@@ -162,7 +161,7 @@
   
   (define incr-limit
     (contract 
-     (-> (union number? (symbols 'inf)) any)
+     (-> (or/c number? (symbols 'inf)) any)
      (lambda (limit)
        (cond [(number? limit) (+ 1 limit)]
              [(eq? limit 'inf) 'inf]))

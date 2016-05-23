@@ -1,9 +1,8 @@
-#lang scheme
+#lang racket/base
   
 (require syntax/kerncase
-         scheme/contract
-         scheme/list
-         "arity-table.ss"
+         racket/contract
+         "arity-table.rkt"
          (lib "shared.ss" "stepper" "private"))
   
   (provide/contract [check-program (-> syntax? table? (listof (cons/c symbol? (cons/c syntax? any/c))))])

@@ -1,19 +1,18 @@
-(module arity-table mzscheme
+(module arity-table racket/base
   
-  (require (lib "contract.ss")
-           (lib "list.ss"))
+  (require racket/contract)
   
   (define limit?
-    (union number? (symbols 'inf)))
+    (or/c number? (symbols 'inf)))
   
   (define limit/unknown?
-    (union limit? (symbols 'unknown)))
+    (or/c limit? (symbols 'unknown)))
   
   (define table?
     (listof (list/c identifier? (listof (list/c limit? limit?)))))
   
   (define table-with-unknown?
-    (listof (list/c identifier? (listof (union (symbols 'unknown) (list/c limit? limit?))))))
+    (listof (list/c identifier? (listof (or/c (symbols 'unknown) (list/c limit? limit?))))))
   
   (provide/contract
    [limit? contract?]
@@ -21,7 +20,7 @@
    [table? contract?]
    [table-with-unknown? contract?]
    [coalesce-table (-> table-with-unknown? table?)]
-   [find-match (-> identifier? table? (union false/c (list/c identifier? (listof (list/c limit? limit?)))))]
+   [find-match (-> identifier? table? (or/c false/c (list/c identifier? (listof (list/c limit? limit?)))))]
    [arity-match (-> (listof (list/c limit? limit?)) number? boolean?)])
   
   (define (coalesce-table list-table) 
@@ -29,12 +28,12 @@
                            (if (null? list-table)
                                null
                                (let* ([matching-elts (apply append (map cadr (filter (lambda (table-elt)
-                                                                                       (module-identifier=? (car table-elt) 
-                                                                                                            (caar list-table)))
+                                                                                       (free-identifier=? (car table-elt)
+                                                                                                          (caar list-table)))
                                                                                      list-table)))]
                                       [rest (loop (filter (lambda (table-elt)
-                                                            (not (module-identifier=? (car table-elt)
-                                                                                      (caar list-table))))
+                                                            (not (free-identifier=? (car table-elt)
+                                                                                    (caar list-table))))
                                                           (cdr list-table)))])
                                  (if (memq 'unknown matching-elts)
                                      rest
@@ -45,7 +44,7 @@
     
   (define (find-match identifier table)
     (ormap (lambda (entry) 
-             (if (module-identifier=? (car entry) identifier)
+             (if (free-identifier=? (car entry) identifier)
                  entry
                  #f)) 
            table))
