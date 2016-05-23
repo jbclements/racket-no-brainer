@@ -167,9 +167,9 @@
         (make-regular-top-result (expr-iterator #'expr table)))]
       [(define-syntaxes (var ...) expr)
        empty-top-result]
-      [(define-values-for-syntax (id ...) expr)
-       empty-top-result]
       [(#%require . require-specs)
+       empty-top-result]
+      [(module . body)
        empty-top-result]
       [else
        (make-regular-top-result (expr-iterator stx table))]))

@@ -143,7 +143,7 @@
 (check-program-test `() `(begin 3 4))
 (let* ([stx (expand (datum->syntax #'here `(module foo scheme (define (h x) (h x)))))]
        [id (syntax-case stx ()
-             [(mod dc1 dc2 (mod-beg (define-values (id) . dc3)))
+             [(mod dc1 dc2 (mod-beg mcr (define-values (id) . dc3)))
               #'id])]
        [table `((,id ((1 1))))])
   (test `((application-ok (#%app h x))) 
