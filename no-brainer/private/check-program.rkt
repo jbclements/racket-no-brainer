@@ -2,8 +2,32 @@
   
 (require syntax/kerncase
          racket/contract
-         "arity-table.rkt"
-         (lib "shared.ss" "stepper" "private"))
+         "arity-table.rkt")
+;; -----------------------------------------------------------------------------
+;; TODO: Replace with id-sets?
+(define (set-pair-union a-set b-set comparator)
+  (cond [(null? b-set) a-set]
+        [(null? a-set) b-set]
+        [else (append (remove* a-set b-set comparator) a-set)]))
+
+(define (varref-set-pair-union a-set b-set)
+  (set-pair-union a-set b-set free-identifier=?))
+
+(define (pair-union->many-union fn)
+  (lambda (args)
+    (foldl fn null args)))
+
+(define varref-set-union
+  (pair-union->many-union varref-set-pair-union))
+
+(define (binding-set-varref-set-intersect bindings varrefs)
+  (cond [(eq? bindings 'all) varrefs]
+        [else (filter (lambda (varref)
+                        (ormap (lambda (binding)
+                                 (bound-identifier=? binding varref))
+                               bindings))
+                      varrefs)]))
+;; -----------------------------------------------------------------------------
   
   (provide/contract [check-program (-> syntax? table? (listof (cons/c symbol? (cons/c syntax? any/c))))])
 

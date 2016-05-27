@@ -4,8 +4,7 @@
            racket/match
            "build-arity-table.rkt"
            "arity-table.rkt"
-           "check-program.rkt"
-	   (lib "my-macros.ss" "stepper" "private"))
+           "check-program.rkt")
   
   (provide no-brainer@)
   
@@ -71,7 +70,7 @@
     (define (unused-module-defs-printer result)
       (receive-string
        (apply string-append
-              (map (lx (format "defined value ~a from ~a unused in module\n"
+              (map (λ (_) (format "defined value ~a from ~a unused in module\n"
                                (syntax->datum _)
                                _))
                    (list-ref result 3)))))

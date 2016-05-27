@@ -11,8 +11,7 @@
          racket/runtime-path
          "no-brainer-sig.rkt"
          "private/no-brainer-vc.rkt"
-         "private/no-brainer.rkt"
-         (lib "my-macros.ss" "stepper" "private"))
+         "private/no-brainer.rkt")
   
 (define-runtime-path icon-path "icon.png")
 
@@ -96,6 +95,6 @@
           (inner (void) disable-evaluation))
         
         (send (get-button-panel) change-children
-              (lx (cons no-brainer-button (remq no-brainer-button _))))))
+              (λ (_) (cons no-brainer-button (remq no-brainer-button _))))))
     
     (drracket:get/extend:extend-unit-frame debugger-unit-frame-mixin))
