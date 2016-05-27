@@ -28,7 +28,8 @@
     (let* ([frame (instantiate frame:basic% () 
                     (label "Things You Might Want To Fix")
                     (width 400)
-                    (height 400))]
+                    (height 400)
+                    (enabled #f))]
            [canvas (instantiate canvas:basic% () (parent (send frame get-area-container)))]
            [text (instantiate text:basic% ())])
       (send canvas set-editor text)
