@@ -32,6 +32,8 @@
     (kernel-syntax-case stx #f
       [(#%provide . provide-specs)
        null]
+      [(module . body)
+       null]
       [else-stx
        (general-top-level-expr-iterator stx)]))
   
@@ -42,9 +44,6 @@
          (cond [(= (length var-list) 1) (expr-iterator #'expr (car var-list))]
                [else (expr-iterator #'expr #f)]))]
       [(define-syntaxes (var ...) expr)
-       null]
-      ;; untested:
-      [(define-values-for-syntax (id ...) expr)
        null]
       ;; untested:
       [(#%require . require-specs)
