@@ -1,10 +1,10 @@
-(module no-brainer mzscheme
-  (require (lib "unit.ss")
-           "../no-brainer-sig.ss"
-           (lib "match.ss")
-           "build-arity-table.ss"
-           "arity-table.ss"
-           "check-program.ss"
+(module no-brainer racket/base
+  (require racket/unit
+           "../no-brainer-sig.rkt"
+           racket/match
+           "build-arity-table.rkt"
+           "arity-table.rkt"
+           "check-program.rkt"
 	   (lib "my-macros.ss" "stepper" "private"))
   
   (provide no-brainer@)
@@ -72,7 +72,7 @@
       (receive-string
        (apply string-append
               (map (lx (format "defined value ~a from ~a unused in module\n"
-                               (syntax-object->datum _)
+                               (syntax->datum _)
                                _))
                    (list-ref result 3)))))
     

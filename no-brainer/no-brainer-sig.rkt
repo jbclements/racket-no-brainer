@@ -1,5 +1,5 @@
-(module no-brainer-sig mzscheme
-  (require (lib "unit.ss"))
+(module no-brainer-sig racket/base
+  (require racket/unit)
   
   (provide no-brainer^
            no-brainer-vc^

@@ -1,9 +1,9 @@
-(module no-brainer-vc mzscheme
-  (require (lib "unit.ss")
-           "../no-brainer-sig.ss"
-           (lib "mred.ss" "mred")
-           (lib "class.ss")
-           (lib "framework.ss" "framework"))
+(module no-brainer-vc racket/base
+  (require racket/unit
+           "../no-brainer-sig.rkt"
+           mred
+           racket/class
+           framework)
   
   (provide no-brainer-vc@)
   

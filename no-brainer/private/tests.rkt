@@ -1,4 +1,4 @@
-#lang scheme
+#lang racket
 
 (require "build-arity-table.rkt"
          "check-program.rkt"
